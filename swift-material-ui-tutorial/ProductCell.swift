@@ -6,8 +6,7 @@ class ProductCell: UICollectionViewCell {
     @IBOutlet weak var priceLabel: UILabel!
 
     override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+      super.awakeFromNib()
     }
 
 }

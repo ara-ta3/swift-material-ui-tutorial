@@ -36,13 +36,9 @@
                     </imageView>
                 </subviews>
             </view>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="150" height="150"/>
-            <connections>
-                <outlet property="imageView" destination="8hZ-hj-pv6" id="TMT-7d-Dc0"/>
-                <outlet property="nameLabel" destination="eib-DD-u07" id="a3Z-wR-TL8"/>
-                <outlet property="priceLabel" destination="wk4-DK-JCr" id="t0v-hi-DOP"/>
-            </connections>
             <point key="canvasLocation" x="-173.91304347826087" y="70.3125"/>
         </collectionViewCell>
     </objects>
