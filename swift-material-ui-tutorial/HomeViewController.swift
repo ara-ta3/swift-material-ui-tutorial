@@ -86,7 +86,7 @@ class HomeViewController: UICollectionViewController {
   }
 }
 
-extension HomeViewController {
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
@@ -116,5 +116,12 @@ extension HomeViewController {
       headerView.trackingScrollWillEndDragging(withVelocity: velocity,
               targetContentOffset: targetContentOffset)
     }
+  }
+
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    // FIXME xibでやりたい
+    let width: CGFloat = UIScreen.main.bounds.width / 2 - 5
+    let height = width
+    return CGSize(width: width, height: height)
   }
 }
