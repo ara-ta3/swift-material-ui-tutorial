@@ -7,7 +7,7 @@ class HomeViewController: UICollectionViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.collectionView!.register(ProductCell.self, forCellWithReuseIdentifier: "ProductCell")
+    self.collectionView!.register(UINib(nibName: "ProductCell", bundle: nil), forCellWithReuseIdentifier: "ProductCell")
 
     self.view.tintColor = .black
     self.view.backgroundColor = .white
@@ -75,7 +75,6 @@ class HomeViewController: UICollectionViewController {
     let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: "ProductCell",
             for: indexPath) as! ProductCell
     //TODO: Set the properties of the cell to reflect to product from the model
-
     return cell
   }
 }
