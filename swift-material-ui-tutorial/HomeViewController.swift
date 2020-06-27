@@ -7,6 +7,7 @@ class HomeViewController: UICollectionViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.collectionView!.register(ProductCell.self, forCellWithReuseIdentifier: "ProductCell")
 
     self.view.tintColor = .black
     self.view.backgroundColor = .white
