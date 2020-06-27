@@ -80,10 +80,27 @@ class LoginViewController: UIViewController {
     self.view.backgroundColor = colorScheme.surfaceColor
     self.logo.tintColor = colorScheme.onSurfaceColor
     self.titleLabel.textColor = colorScheme.onSurfaceColor
+//    MDCTextFieldColorThemer.applySemanticColorScheme(colorscheme,
+//            to: self.usernametextfieldcontroller)
+//    mdctextfieldcolorthemer.applysemanticcolorscheme(colorscheme,
+//            to: self.passwordtextfieldcontroller)
     MDCButtonColorThemer.applySemanticColorScheme(colorScheme,
             to: self.cancelButton)
     MDCButtonColorThemer.applySemanticColorScheme(colorScheme,
             to: self.nextButton)
+
+    let typographyScheme = ApplicationScheme.shared.typographyScheme
+    titleLabel.font = typographyScheme.headline5
+//    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme,
+//            to: usernameTextFieldController)
+//    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme,
+//            to: passwordTextFieldController)
+  //  `MDCFloatingButton`'s Theming extensions.
+    // Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
+    MDCButtonTypographyThemer.applyTypographyScheme(typographyScheme,
+            to: cancelButton)
+    MDCButtonTypographyThemer.applyTypographyScheme(typographyScheme,
+            to: nextButton)
 
     view.addSubview(scrollView)
 
