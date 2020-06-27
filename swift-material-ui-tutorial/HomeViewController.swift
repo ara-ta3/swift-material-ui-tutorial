@@ -21,10 +21,22 @@ class HomeViewController: UICollectionViewController {
     self.appBarViewController.didMove(toParent: self)
 
     self.appBarViewController.headerView.trackingScrollView = self.collectionView
-    // AppBar Setup
-    //TODO: Add the appBar controller and views
-    // Setup Navigation Items
-    //TODO: Create the items and set them on the view controller's navigationItems properties
+
+    let menuItemImage = UIImage(named: "MenuItem")
+    let templatedMenuItemImage = menuItemImage?.withRenderingMode(.alwaysTemplate)
+    let menuItem = UIBarButtonItem(image: templatedMenuItemImage,
+            style: .plain,
+            target: self,
+            action: #selector(menuItemTapped(sender:)))
+    self.navigationItem.leftBarButtonItem = menuItem
+
+    let searchItemImage = UIImage(named: "SearchItem")
+    let templatedSearchItemImage = searchItemImage?.withRenderingMode(.alwaysTemplate)
+    let searchItem = UIBarButtonItem(image: templatedSearchItemImage,
+            style: .plain,
+            target: nil,
+            action: nil)
+    self.navigationItem.rightBarButtonItems = [ searchItem ]
   }
 
   override func viewDidAppear(_ animated: Bool) {
