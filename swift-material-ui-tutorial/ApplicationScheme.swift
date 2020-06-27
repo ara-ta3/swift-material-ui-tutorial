@@ -19,7 +19,7 @@ class ApplicationScheme: NSObject {
   public let buttonScheme = MDCContainerScheme()
 
   public let colorScheme: MDCSemanticColorScheme = {
-    let scheme = MDCSemanticColorScheme(defaults: .material201907)
+    let scheme = MDCSemanticColorScheme(defaults: .material201804)
     scheme.primaryColor =
             UIColor(red: 252.0/255.0, green: 184.0/255.0, blue: 171.0/255.0, alpha: 1.0)
     scheme.primaryColorVariant =
@@ -40,7 +40,6 @@ class ApplicationScheme: NSObject {
             UIColor(red: 68.0/255.0, green: 44.0/255.0, blue: 46.0/255.0, alpha: 1.0)
     scheme.errorColor =
             UIColor(red: 197.0/255.0, green: 3.0/255.0, blue: 43.0/255.0, alpha: 1.0)
-
     return scheme
   }()
 

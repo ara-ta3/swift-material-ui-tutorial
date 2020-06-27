@@ -1,5 +1,6 @@
 import UIKit
 import MaterialComponents
+import MaterialComponents.MaterialButtons_Theming
 
 /**
  * @see https://github.com/material-components/material-components-ios-codelabs
@@ -80,29 +81,16 @@ class LoginViewController: UIViewController {
     self.view.backgroundColor = colorScheme.surfaceColor
     self.logo.tintColor = colorScheme.onSurfaceColor
     self.titleLabel.textColor = colorScheme.onSurfaceColor
-//    MDCTextFieldColorThemer.applySemanticColorScheme(colorscheme,
-//            to: self.usernametextfieldcontroller)
-//    mdctextfieldcolorthemer.applysemanticcolorscheme(colorscheme,
-//            to: self.passwordtextfieldcontroller)
-    MDCButtonColorThemer.applySemanticColorScheme(colorScheme,
-            to: self.cancelButton)
-    MDCButtonColorThemer.applySemanticColorScheme(colorScheme,
-            to: self.nextButton)
-
     let typographyScheme = ApplicationScheme.shared.typographyScheme
-    titleLabel.font = typographyScheme.headline5
-//    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme,
-//            to: usernameTextFieldController)
-//    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme,
-//            to: passwordTextFieldController)
-  //  `MDCFloatingButton`'s Theming extensions.
-    // Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
-    MDCButtonTypographyThemer.applyTypographyScheme(typographyScheme,
-            to: cancelButton)
-    MDCButtonTypographyThemer.applyTypographyScheme(typographyScheme,
-            to: nextButton)
+    self.titleLabel.font = typographyScheme.headline5
+    self.usernameTextFieldController.applyTheme(withScheme: ApplicationScheme.shared.buttonScheme)
+    self.passwordTextFieldController.applyTheme(withScheme: ApplicationScheme.shared.buttonScheme)
 
-    view.addSubview(scrollView)
+    // https://github.com/material-components/material-components-ios/blob/develop/docs/theming.md
+    self.cancelButton.applyTextTheme(withScheme: ApplicationScheme.shared.buttonScheme)
+    self.nextButton.applyContainedTheme(withScheme: ApplicationScheme.shared.buttonScheme)
+
+    self.view.addSubview(scrollView)
 
     NSLayoutConstraint.activate(
             NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|",
