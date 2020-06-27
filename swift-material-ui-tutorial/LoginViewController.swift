@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
   }()
 
   let logo: UIImageView = {
-    let baseImage = UIImage.init(named: "ShrineLogo")
+    let baseImage = UIImage.init(named: "Shrine")
     let image = baseImage?.withRenderingMode(.alwaysTemplate)
     let logoImageView = UIImageView(image: image)
     logoImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,8 +75,15 @@ class LoginViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.tintColor = .black
-    scrollView.backgroundColor = .white
+    let colorScheme = ApplicationScheme.shared.colorScheme
+    self.view.tintColor = colorScheme.onSurfaceColor
+    self.view.backgroundColor = colorScheme.surfaceColor
+    self.logo.tintColor = colorScheme.onSurfaceColor
+    self.titleLabel.textColor = colorScheme.onSurfaceColor
+    MDCButtonColorThemer.applySemanticColorScheme(colorScheme,
+            to: self.cancelButton)
+    MDCButtonColorThemer.applySemanticColorScheme(colorScheme,
+            to: self.nextButton)
 
     view.addSubview(scrollView)
 

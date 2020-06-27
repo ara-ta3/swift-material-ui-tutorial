@@ -38,6 +38,12 @@ class HomeViewController: UICollectionViewController {
             target: nil,
             action: nil)
     self.navigationItem.rightBarButtonItems = [ searchItem ]
+    self.view.backgroundColor = ApplicationScheme.shared.colorScheme
+            .surfaceColor
+    self.collectionView?.backgroundColor = ApplicationScheme.shared.colorScheme
+            .surfaceColor
+    MDCAppBarColorThemer.applyColorScheme(ApplicationScheme.shared.colorScheme
+            , to:self.appBarViewController)
   }
 
   override func viewDidAppear(_ animated: Bool) {
