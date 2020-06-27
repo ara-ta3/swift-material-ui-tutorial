@@ -1,5 +1,9 @@
 import UIKit
+import MaterialComponents
 
+/**
+ * @see https://github.com/material-components/material-components-ios-codelabs
+ */
 class LoginViewController: UIViewController {
   let scrollView: UIScrollView = {
     let view = UIScrollView()
@@ -25,7 +29,42 @@ class LoginViewController: UIViewController {
     return titleLabel
   }()
 
+  let usernameTextField: MDCTextField = {
+    let usernameTextField = MDCTextField()
+    usernameTextField.translatesAutoresizingMaskIntoConstraints = false
+    usernameTextField.clearButtonMode = .unlessEditing
+    usernameTextField.backgroundColor = .white
+    return usernameTextField
+  }()
+
+  let passwordTextField: MDCTextField = {
+    let passwordTextField = MDCTextField()
+    passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+    passwordTextField.isSecureTextEntry = true
+    passwordTextField.backgroundColor = .white
+    return passwordTextField
+  }()
+  let usernameTextFieldController: MDCTextInputControllerOutlined
+  let passwordTextFieldController: MDCTextInputControllerOutlined
+
+  let cancelButton: MDCButton = {
+    let cancelButton = MDCButton()
+    cancelButton.translatesAutoresizingMaskIntoConstraints = false
+    cancelButton.setTitle("CANCEL", for: .normal)
+    cancelButton.addTarget(self, action: #selector(didTapCancel(sender:)), for: .touchUpInside)
+    return cancelButton
+  }()
+  let nextButton: MDCButton = {
+    let nextButton = MDCButton()
+    nextButton.translatesAutoresizingMaskIntoConstraints = false
+    nextButton.setTitle("NEXT", for: .normal)
+    nextButton.addTarget(self, action: #selector(didTapNext(sender:)), for: .touchUpInside)
+    return nextButton
+  }()
+
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    usernameTextFieldController = MDCTextInputControllerOutlined(textInput: usernameTextField)
+    passwordTextFieldController = MDCTextInputControllerOutlined(textInput: passwordTextField)
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -58,12 +97,17 @@ class LoginViewController: UIViewController {
 
     scrollView.addSubview(titleLabel)
     scrollView.addSubview(logo)
+    scrollView.addSubview(usernameTextField)
+    scrollView.addSubview(passwordTextField)
+    scrollView.addSubview(nextButton)
+    scrollView.addSubview(cancelButton)
 
-    // TextFields
-    //TODO: Add text fields to scroll view and setup initial state
-    // Buttons
-    //TODO: Add buttons to the scroll view
-    // Constraints
+    usernameTextFieldController.placeholderText = "Username"
+    usernameTextField.delegate = self
+    passwordTextFieldController.placeholderText = "Password"
+    passwordTextField.delegate = self
+    registerKeyboardNotifications()
+
     var constraints = [NSLayoutConstraint]()
     constraints.append(NSLayoutConstraint(item: logo,
             attribute: .top,
@@ -93,10 +137,71 @@ class LoginViewController: UIViewController {
             attribute: .centerX,
             multiplier: 1,
             constant: 0))
-    // Text Fields
-    //TODO: Setup text field constraints
-    // Buttons
-    //TODO: Setup button constraints
+    constraints.append(NSLayoutConstraint(item: usernameTextField,
+            attribute: .top,
+            relatedBy: .equal,
+            toItem: titleLabel,
+            attribute: .bottom,
+            multiplier: 1,
+            constant: 22))
+    constraints.append(NSLayoutConstraint(item: usernameTextField,
+            attribute: .centerX,
+            relatedBy: .equal,
+            toItem: scrollView,
+            attribute: .centerX,
+            multiplier: 1,
+            constant: 0))
+    constraints.append(contentsOf:
+    NSLayoutConstraint.constraints(withVisualFormat: "H:|-[username]-|",
+            options: [],
+            metrics: nil,
+            views: [ "username" : usernameTextField]))
+    constraints.append(NSLayoutConstraint(item: passwordTextField,
+            attribute: .top,
+            relatedBy: .equal,
+            toItem: usernameTextField,
+            attribute: .bottom,
+            multiplier: 1,
+            constant: 8))
+    constraints.append(NSLayoutConstraint(item: passwordTextField,
+            attribute: .centerX,
+            relatedBy: .equal,
+            toItem: scrollView,
+            attribute: .centerX,
+            multiplier: 1,
+            constant: 0))
+    constraints.append(contentsOf:
+    NSLayoutConstraint.constraints(withVisualFormat: "H:|-[password]-|",
+            options: [],
+            metrics: nil,
+            views: [ "password" : passwordTextField]))
+    constraints.append(NSLayoutConstraint(item: cancelButton,
+            attribute: .top,
+            relatedBy: .equal,
+            toItem: passwordTextField,
+            attribute: .bottom,
+            multiplier: 1,
+            constant: 8))
+    constraints.append(NSLayoutConstraint(item: cancelButton,
+            attribute: .centerY,
+            relatedBy: .equal,
+            toItem: nextButton,
+            attribute: .centerY,
+            multiplier: 1,
+            constant: 0))
+    constraints.append(contentsOf:
+    NSLayoutConstraint.constraints(withVisualFormat: "H:[cancel]-[next]-|",
+            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
+            metrics: nil,
+            views: [ "cancel" : cancelButton, "next" : nextButton]))
+    constraints.append(NSLayoutConstraint(item: nextButton,
+            attribute: .bottom,
+            relatedBy: .equal,
+            toItem: scrollView.contentLayoutGuide,
+            attribute: .bottomMargin,
+            multiplier: 1,
+            constant: -20))
+
     NSLayoutConstraint.activate(constraints)
   }
 
@@ -132,7 +237,31 @@ class LoginViewController: UIViewController {
   @objc func keyboardWillHide(notification: NSNotification) {
     self.scrollView.contentInset = UIEdgeInsets.zero;
   }
+
+  @objc func didTapNext(sender: Any) {
+    self.dismiss(animated: true, completion: nil)
+  }
+
+  @objc func didTapCancel(sender: Any) {
+    self.dismiss(animated: true, completion: nil)
+  }
 }
 
 extension LoginViewController: UITextFieldDelegate {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder();
+
+    // TextField
+    if (textField == passwordTextField) {
+      let textFieldCharacterCount = textField.text?.count ?? 0
+      if (textFieldCharacterCount < 8) {
+        passwordTextFieldController.setErrorText("Password is too short",
+                errorAccessibilityValue: nil)
+      } else {
+        passwordTextFieldController.setErrorText(nil, errorAccessibilityValue:nil)
+      }
+    }
+
+    return false
+  }
 }
