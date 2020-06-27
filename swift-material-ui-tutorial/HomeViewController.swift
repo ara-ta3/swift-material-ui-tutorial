@@ -1,7 +1,9 @@
 import UIKit
+import MaterialComponents
 
-class HomeViewController: UIViewController {
+class HomeViewController: UICollectionViewController {
   var shouldDisplayLogin = true
+  var appBarViewController = MDCAppBarViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -11,19 +13,30 @@ class HomeViewController: UIViewController {
 
     self.title = "Shrine"
 
-    // Done Label
-    let doneLabel = UILabel()
-    doneLabel.translatesAutoresizingMaskIntoConstraints = false
-    doneLabel.text = "You did it!"
-    self.view.addSubview(doneLabel)
-    doneLabel.sizeToFit()
+    self.collectionView?.backgroundColor = .white
 
-    NSLayoutConstraint(item: doneLabel, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-    NSLayoutConstraint(item: doneLabel, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+    self.addChild(self.appBarViewController)
+
+    self.view.addSubview(self.appBarViewController.view)
+    self.appBarViewController.didMove(toParent: self)
+
+    self.appBarViewController.headerView.trackingScrollView = self.collectionView
+    // AppBar Setup
+    //TODO: Add the appBar controller and views
+    // Setup Navigation Items
+    //TODO: Create the items and set them on the view controller's navigationItems properties
   }
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+
+    if (self.collectionViewLayout is UICollectionViewFlowLayout) {
+      let flowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
+      let HORIZONTAL_SPACING: CGFloat = 8.0
+      let itemDimension: CGFloat = (self.view.frame.size.width - 3.0 * HORIZONTAL_SPACING) * 0.5
+      let itemSize = CGSize(width: itemDimension, height: itemDimension)
+      flowLayout.itemSize = itemSize
+    }
 
     if (self.shouldDisplayLogin) {
       let loginViewController = LoginViewController(nibName: nil, bundle: nil)
@@ -32,4 +45,42 @@ class HomeViewController: UIViewController {
     }
   }
 
+  // MARK - Methods
+  @objc func menuItemTapped(sender: Any) {
+    let loginViewController = LoginViewController(nibName: nil, bundle: nil)
+    self.present(loginViewController, animated: true, completion: nil)
+  }
+}
+
+extension HomeViewController {
+
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
+      self.appBarViewController.headerView.trackingScrollDidScroll()
+    }
+  }
+
+  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
+      self.appBarViewController.headerView.trackingScrollDidEndDecelerating()
+    }
+  }
+
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView,
+                                         willDecelerate decelerate: Bool) {
+    let headerView = self.appBarViewController.headerView
+    if (scrollView == headerView.trackingScrollView) {
+      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+    }
+  }
+
+  override func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                          withVelocity velocity: CGPoint,
+                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    let headerView = self.appBarViewController.headerView
+    if (scrollView == headerView.trackingScrollView) {
+      headerView.trackingScrollWillEndDragging(withVelocity: velocity,
+              targetContentOffset: targetContentOffset)
+    }
+  }
 }
