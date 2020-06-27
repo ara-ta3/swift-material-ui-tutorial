@@ -44,6 +44,9 @@ class HomeViewController: UICollectionViewController {
             .surfaceColor
     MDCAppBarColorThemer.applyColorScheme(ApplicationScheme.shared.colorScheme
             , to:self.appBarViewController)
+
+    MDCAppBarTypographyThemer.applyTypographyScheme(ApplicationScheme.shared.typographyScheme
+            , to: self.appBarViewController)
   }
 
   override func viewDidAppear(_ animated: Bool) {

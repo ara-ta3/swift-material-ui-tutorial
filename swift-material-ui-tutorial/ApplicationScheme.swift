@@ -40,12 +40,17 @@ class ApplicationScheme: NSObject {
             UIColor(red: 68.0/255.0, green: 44.0/255.0, blue: 46.0/255.0, alpha: 1.0)
     scheme.errorColor =
             UIColor(red: 197.0/255.0, green: 3.0/255.0, blue: 43.0/255.0, alpha: 1.0)
+
     return scheme
   }()
 
   public let typographyScheme: MDCTypographyScheme = {
     let scheme = MDCTypographyScheme()
-    //TODO: Add our custom fonts after this line
+    let fontName = "Rubik"
+    scheme.headline5 = UIFont(name: fontName, size: 24)!
+    scheme.headline6 = UIFont(name: fontName, size: 20)!
+    scheme.subtitle1 = UIFont(name: fontName, size: 16)!
+    scheme.button = UIFont(name: fontName, size: 14)!
     return scheme
   }()
 }
