@@ -1,0 +1,6 @@
+name: swift-material-ui-tutorial
+targets:
+  swift-material-ui-tutorial:
+    type: application
+    platform: iOS
+    sources: swift-material-ui-tutorial
