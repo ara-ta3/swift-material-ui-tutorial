@@ -66,16 +66,23 @@ class HomeViewController: UICollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
-    //TODO: Set the number of cells to be equal to the number of products in the catalog
-    return 1
+    return Catalog.count
   }
 
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: "ProductCell",
-            for: indexPath) as! ProductCell
-    //TODO: Set the properties of the cell to reflect to product from the model
-    return cell
+            for: indexPath)
+    if let cell = cell  as? ProductCell {
+      let product = Catalog.productAtIndex(index: indexPath.row)
+      cell.imageView.image = UIImage(named: product.imageName)
+      cell.imageView.sizeToFit()
+      cell.nameLabel.text = product.productName
+      cell.priceLabel.text = product.price
+      return cell
+    }
+    cell?.sizeToFit()
+    return cell as! ProductCell
   }
 }
 
